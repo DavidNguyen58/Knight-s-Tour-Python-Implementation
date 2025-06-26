@@ -43,7 +43,7 @@ def warnsdorf_heuristic(pos, dirs, visited, n):
     return [move for _, move in moves]
 
 
-def search(state, src, dirs, dst, visited):
+def search(state, src, dirs, dst, visited, res=[]):
     """
     DFS Search Method
     """
@@ -58,7 +58,8 @@ def search(state, src, dirs, dst, visited):
     for nx, ny in warnsdorf_heuristic(src, dirs, visited, N):
         if not validate((nx, ny), len(state)) or (nx, ny) in visited:
             continue
-        if search(state, (nx, ny), dirs, dst + 1, visited):
+        if search(state, (nx, ny), dirs, dst + 1, visited, res):
+            res.append((nx, ny))
             return True
     
     visited.remove(src)
@@ -76,11 +77,13 @@ if __name__ == "__main__":
 
     src = (0, 0)
     visited = set()
+    res = []
 
     start = time.time()
-    ans = search(state, src, dirs, 0, visited)
+    ans = search(state, src, dirs, 0, visited, res)
     end = time.time()
 
     print(f"The time it takes to run {end - start}.")
     if ans:
+        print(f"The sequence of moves is {res}")
         print_board(state)
