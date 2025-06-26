@@ -66,6 +66,7 @@ def search(state, src, dirs, dst, visited, res=[]):
     state[x][y] = 0
     return False
 
+
 if __name__ == "__main__":
     n = 5
 
